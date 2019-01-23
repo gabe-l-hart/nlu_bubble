@@ -5,8 +5,11 @@ var bodyParser = require('body-parser');
 var fileUpload = require('express-fileupload');
 
 var index = require('./routes/index');
+var { logo } = require('./lib/logo');
 
 var app = express();
+
+console.log(logo);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
