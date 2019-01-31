@@ -30,9 +30,9 @@
       return num;
     };
     idValue = function(d) {
-      let id = d.text.substring(0, 24);
+      let id = d.text;
       if (d.type) {
-        id = `${id} [${d.type.substring(0, 15)}]`
+        id = `${id} [${d.type}]`
       }
       return id;
     };
@@ -368,6 +368,22 @@
         url : '/fileUpload',
         type : 'POST',
         data : formData,
+        processData: false,
+        contentType: false,
+        success : function(data) {
+          console.log(data);
+          json = data;
+          active = true;
+          drawBubbles("#conceptsTab");
+        }
+      });
+    });
+    $("#url-form").submit(function( event ) {
+      event.preventDefault();
+
+      $.ajax({
+        url : `/analyzeURL?url=${$('#url_input').val()}`,
+        type : 'GET',
         processData: false,
         contentType: false,
         success : function(data) {

@@ -10,6 +10,7 @@ const features = {
   concepts: {},
   sentiment: {},
   entities: {
+    // model: 'en-us-tir'
   },
   emotion: {}
 }
@@ -24,6 +25,13 @@ router.get('/test', async function(req, res, next) {
 router.post('/fileUpload', async function(req, res, next) {
   let response = await nlu.analyze(req.files.file.data.toString('utf8'), features).catch((err) => {
     console.log(`Error caught while performing /fileUpload call: ${err}`);
+  });
+  res.json(response);
+});
+
+router.get('/analyzeURL', async function(req, res, next) {
+  let response = await nlu.analyze_url(req.query.url, features).catch((err) => {
+    console.log(`Error caught while performing /analyzeURL call: ${err}`);
   });
   res.json(response);
 });
