@@ -19,35 +19,37 @@
 <body>
 <img src="images/think.png" width="470" height="130" align="right"/>
 
-  <div id="welcome" class="well">
+<div id="welcome" class="well">
     <!-- <img src="/images/bww.png" align="right"/> -->
     <header>
         <h3>Welcome to Think 2019!</h3>
     </header>
 
-  </div>
+</div>
 
 <div id="input_forms">
-    <form id="upload-form" method="POST" enctype="multipart/form-data" action="/fileUpload">
-        <table>
-            <tr>
-              <td>Upload a file:</td><td><input id="file" type="file" name="file" /></td>
-              <td><input type="submit" value="Upload" /></td>
-            </tr>
-        </table>
-    </form>
-    <form id="url-form" method="POST" enctype="multipart/form-data" action="/analyzeURL">
-        <table>
-            <tr>
-              <td>Analyze a URL:</td><td><input id="url_input" type="text" name="text" /></td>
-              <td><input type="submit" value="Analyze" /></td>
-            </tr>
-        </table>
-    </form>
+    <table>
+        <tr>
+            <form id="upload-form" method="POST" enctype="multipart/form-data" action="/fileUpload">
+                <td><h4>Upload a file:</h4></td><td><input id="file" type="file" name="file" /></td>
+                <td><input type="submit" value="Upload" /></td>
+            </form>
+        </tr>
+        <tr>
+            <form id="url-form" method="POST" enctype="multipart/form-data" action="/analyzeURL">
+                <td><h4>Analyze a URL:</h4></td><td><input id="url_input" type="text" name="text" /></td>
+                <td><input type="submit" value="Analyze" /></td>
+            </form>
+        </tr>
+    </table>
+</div>
+
+<div id="analyzed_text">
+    <textarea id="analyzed_text_area" rows="10" readonly="true">&nbsp;</textarea>
 </div>
 
 <div id="status">
-  <h3>No word is active</h3>
+    <h3>No word is active</h3>
 </div>
 
 <div id="container" class="container">

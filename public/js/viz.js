@@ -198,9 +198,9 @@
         return id === idValue(d);
       });
       if (id.length > 0) {
-        return d3.select("#status").html("<h3>The word <span class=\"active\">" + id + "</span> is now active</h3>");
+        return d3.select("#status").html("<h3><span class=\"active\">" + id + "</span></h3>");
       } else {
-        return d3.select("#status").html("<h3>No word is active</h3>");
+        return d3.select("#status").html("<h3>No result selected</h3>");
       }
     };
     mouseover = function(d) {
@@ -290,6 +290,9 @@
       location.replace("#");
       return location.search = encodeURIComponent(key);
     });
+
+    // Plot the analyzed text
+    d3.select("#analyzed_text").html(`<textarea id="analyzed_text_area" rows="10" readonly="true">${json.analyzed_text}</textarea>`);
 
     return d3.csv("data/" + text.file, display);
   };

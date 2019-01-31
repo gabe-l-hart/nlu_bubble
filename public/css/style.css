@@ -95,3 +95,11 @@ footer p {
   padding-bottom:20px;
   font: 13px sans-serif;
 }
+
+#analyzed_text {
+  padding: 20px;
+}
+
+#analyzed_text_area {
+  width: 100%
+}
