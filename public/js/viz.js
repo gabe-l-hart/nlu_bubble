@@ -24,7 +24,7 @@
     rScale = d3.scale.sqrt().range([0, maxRadius]);
     rValue = function(d) {
       var num;
-      num = d.relevance * 10;
+      num = (d.relevance || 1.0) * 10;
       num = Math.pow(num, 2);
       num = num.toFixed(0);
       return num;
