@@ -30,7 +30,11 @@
       return num;
     };
     idValue = function(d) {
-      return d.text.substring(0, 24);
+      let id = d.text.substring(0, 24);
+      if (d.type) {
+        id = `${id} [${d.type.substring(0, 15)}]`
+      }
+      return id;
     };
     textValue = function(d) {
       return d.text.substring(0, 24);
