@@ -1,5 +1,5 @@
 {
   "url": "https://gateway.watsonplatform.net/natural-language-understanding/api",
-  "username": "apiKey",
+  "username": "apikey",
   "password": "REPLACE"
 }
