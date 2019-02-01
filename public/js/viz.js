@@ -32,7 +32,10 @@
     idValue = function(d) {
       let id = d.text;
       if (d.type) {
-        id = `${id} [${d.type}]`
+        id = `${id} [${d.type}]`;
+      }
+      if (d.sentiment && d.sentiment.score !== undefined) {
+        id = `${id}: ${d.sentiment.score}`;
       }
       return id;
     };
@@ -105,7 +108,15 @@
         return idValue(d);
       });
       node.exit().remove();
-      return node.enter().append("a").attr("class", "bubble-node").attr("xlink:href", function(d) {
+      return node.enter().append("a").attr("class", "bubble-node").attr("class", function(d) {
+        if (d.sentiment && d.sentiment.label === "positive") {
+          return "bubble-positive";
+        } else if (d.sentiment && d.sentiment.label === "negative") {
+          return "bubble-negative";
+        } else {
+          return "bubble-neutral"
+        }
+      }).attr("xlink:href", function(d) {
         return "#" + (encodeURIComponent(idValue(d)));
       }).call(force.drag).call(connectEvents).append("circle").attr("r", function(d) {
         return rScale(rValue(d));

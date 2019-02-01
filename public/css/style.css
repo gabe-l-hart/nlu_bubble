@@ -51,9 +51,20 @@ header {
   pointer-events: all;
 }
 
-.bubble-node {
+/* NOTE: These bubble-* styles are declared in order so that the last takes
+ * precedence */
+
+.bubble-neutral {
   /* fill: #d1e0f3; */
   fill: #C3D9FF;
+}
+
+.bubble-positive {
+  fill: #DCE9BE
+}
+
+.bubble-negative {
+  fill: #f06292
 }
 
 .bubble-hover {
@@ -63,14 +74,14 @@ header {
 
 .bubble-selected {
   /* fill: #a8c8ee;  */
-  fill: #CEE98F;
+  fill: #f9d440;
   /* stroke: #6081a3; */
   stroke: #A6BA92;
   stroke-width: 1.5px;
 }
 
 .active {
-  color: #A6BA92
+  color: #48669e
 }
 
 a.bubble-label {
