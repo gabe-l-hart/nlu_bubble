@@ -38,7 +38,7 @@ npm start
 
 ### Use It
 
-To use the running app, load [localhost:3000](localhost:3000) in your browser.
+To use the running app, load [localhost:3000](http://localhost:3000) in your browser.
 
 ## Concepts Tab
 
