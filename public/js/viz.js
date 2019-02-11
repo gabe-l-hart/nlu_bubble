@@ -118,13 +118,23 @@
       });
       node.exit().remove();
       return node.enter().append("a").attr("class", "bubble-node").attr("class", function(d) {
+
+        // Special coloring for targeted sentiment
+        const bubble_classes = [];
         if (d.sentiment && d.sentiment.label === "positive") {
-          return "bubble-positive";
+          bubble_classes.push("bubble-positive");
         } else if (d.sentiment && d.sentiment.label === "negative") {
-          return "bubble-negative";
+          bubble_classes.push("bubble-negative");
         } else {
-          return "bubble-neutral"
+          bubble_classes.push("bubble-neutral");
         }
+
+        // Special coloring for part-of-speech tag
+        if (d.part_of_speech) {
+          bubble_classes.push(`bubble-${d.part_of_speech}`);
+        }
+
+        return bubble_classes.join(' ');
       }).attr("xlink:href", function(d) {
         return "#" + (encodeURIComponent(idValue(d)));
       }).call(force.drag).call(connectEvents).append("circle").attr("r", function(d) {
