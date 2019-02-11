@@ -15,7 +15,8 @@ const features = {
   emotion: {},
   syntax: {
     tokens: {
-      lemma: true
+      lemma: true,
+      part_of_speech: true
     }
   }
 }
