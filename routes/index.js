@@ -12,7 +12,12 @@ const features = {
   entities: {
     // model: 'en-us-tir'
   },
-  emotion: {}
+  emotion: {},
+  syntax: {
+    tokens: {
+      lemma: true
+    }
+  }
 }
 
 router.get('/test', async function(req, res, next) {
