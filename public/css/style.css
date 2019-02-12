@@ -67,6 +67,18 @@ header {
   fill: #f06292
 }
 
+.bubble-VERB {
+  fill: #f06292
+}
+
+.bubble-PROPN {
+  fill: #DCE9BE
+}
+
+.bubble-NOUN {
+  fill: #DCE9BE
+}
+
 .bubble-hover {
   /* fill: #b8c7d9; */
   fill: #E8E9E7;

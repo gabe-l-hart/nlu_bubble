@@ -56,6 +56,10 @@ The `Entities` tab shows all of the important `entities` extracted from the text
 
 The `Sentiment & Emotion` tab shows the range of emotions being expressed in the document as well as the top-level `positive`/`negative` sentiment.
 
+### Syntax Tab
+
+The `Syntax` tab shows a word-cloud of all the words in the document in their base (lemmatized) form. The bubbles are weighted by how many times the word appears in the document, and nouns and verbs are indicated by green and red respectively.
+
 ## Extra Credit
 
 Here are some ideas on how to make your `nlu_bubble` app even cooler. If you get any of them working, submit a PR! We'd love add your contributions to the tool.

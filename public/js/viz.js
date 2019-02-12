@@ -1,5 +1,5 @@
 (function() {
-  var Bubbles, drawBubbles, drawSentiments, root, texts;
+  var Bubbles, getSyntax, drawBubbles, drawSentiments, root, texts;
 
   var active = false;
   var json = {};
@@ -24,9 +24,15 @@
     rScale = d3.scale.sqrt().range([0, maxRadius]);
     rValue = function(d) {
       var num;
-      num = (d.relevance || 1.0) * 10;
-      num = Math.pow(num, 2);
-      num = num.toFixed(0);
+      if (d.relevance) {
+        num = (d.relevance) * 10;
+        num = Math.pow(num, 2);
+        num = num.toFixed(0);
+      } else if (d.count) {
+        num = d.count;
+      } else {
+        num = 100.0;
+      }
       return num;
     };
     idValue = function(d) {
@@ -36,6 +42,9 @@
       }
       if (d.sentiment && d.sentiment.score !== undefined) {
         id = `${id}: ${d.sentiment.score}`;
+      }
+      if (d.part_of_speech) {
+        id = `${id} [${d.part_of_speech}]`
       }
       return id;
     };
@@ -109,13 +118,23 @@
       });
       node.exit().remove();
       return node.enter().append("a").attr("class", "bubble-node").attr("class", function(d) {
+
+        // Special coloring for targeted sentiment
+        const bubble_classes = [];
         if (d.sentiment && d.sentiment.label === "positive") {
-          return "bubble-positive";
+          bubble_classes.push("bubble-positive");
         } else if (d.sentiment && d.sentiment.label === "negative") {
-          return "bubble-negative";
+          bubble_classes.push("bubble-negative");
         } else {
-          return "bubble-neutral"
+          bubble_classes.push("bubble-neutral");
         }
+
+        // Special coloring for part-of-speech tag
+        if (d.part_of_speech) {
+          bubble_classes.push(`bubble-${d.part_of_speech}`);
+        }
+
+        return bubble_classes.join(' ');
       }).attr("xlink:href", function(d) {
         return "#" + (encodeURIComponent(idValue(d)));
       }).call(force.drag).call(connectEvents).append("circle").attr("r", function(d) {
@@ -266,6 +285,26 @@
     }
   ];
 
+  getSyntax = function(tokens) {
+    const allTokens = tokens.filter(token => token.lemma !== undefined && token.part_of_speech !== undefined).map(token => `${token.lemma}-${token.part_of_speech}`);
+    const uniqueTokensWithCounts = allTokens.reduce(function (acc, curr) {
+      if (acc[curr] === undefined) {
+        acc[curr] = 1;
+      } else {
+        acc[curr] += 1;
+      }
+      return acc;
+    }, {});
+    return Object.keys(uniqueTokensWithCounts).map(function (token) {
+      const delimIdx = token.lastIndexOf('-');
+      return {
+        text: token.slice(0, delimIdx),
+        part_of_speech: token.slice(delimIdx+1),
+        count: uniqueTokensWithCounts[token],
+      };
+    });
+  }
+
   drawBubbles = function(tabType) {
     var display, key, plot, text;
     plot = Bubbles();
@@ -283,6 +322,9 @@
       }
       if (tabType === "#sentimentsTab") {
         return plotData("#vis", dataObj.sentiment.document, plot);
+      }
+      if (tabType === "#syntaxTab") {
+        return plotData("#vis", getSyntax(dataObj.syntax.tokens), plot);
       }
     };
     key = decodeURIComponent(location.search).replace("?", "");
@@ -337,6 +379,7 @@
         $("#entitiesLi").removeClass('active');
         $("#sentimentsLi").removeClass('active');
         $("#keywordsLi").removeClass('active');
+        $("#syntaxLi").removeClass('active');
         $("#conceptsLi").addClass('active');
         return drawBubbles("#conceptsTab");
       }
@@ -346,6 +389,7 @@
         $("#conceptsLi").removeClass('active');
         $("#entitiesLi").removeClass('active');
         $("#sentimentsLi").removeClass('active');
+        $("#syntaxLi").removeClass('active');
         $("#keywordsLi").addClass('active');
         return drawBubbles("#keywordsTab");
       }
@@ -355,6 +399,7 @@
         $("#conceptsLi").removeClass('active');
         $("#sentimentsLi").removeClass('active');
         $("#keywordsLi").removeClass('active');
+        $("#syntaxLi").removeClass('active');
         $("#entitiesLi").addClass('active');
         return drawBubbles("#entitiesTab");
       }
@@ -364,9 +409,20 @@
         $("#entitiesLi").removeClass('active');
         $("#conceptsLi").removeClass('active');
         $("#keywordsLi").removeClass('active');
+        $("#syntaxLi").removeClass('active');
         $("#sentimentsLi").addClass('active');
         drawBubbles("#sentimentsTab");
         return drawSentiments();
+      }
+    });
+    $("#syntaxTab").click(function() {
+      if(active) {
+        $("#entitiesLi").removeClass('active');
+        $("#conceptsLi").removeClass('active');
+        $("#keywordsLi").removeClass('active');
+        $("#sentimentsLi").removeClass('active');
+        $("#syntaxLi").addClass('active');
+        return drawBubbles("#syntaxTab");
       }
     });
   });
