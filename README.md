@@ -2,6 +2,12 @@
 
 Welcome to the Watson Natural Language Understanding (NLU) Hands-On THINK lab! This application demonstrates how to use NLU with the [`node.js` SDK](https://github.com/watson-developer-cloud/node-sdk) to extract interesting structured data from your documents!
 
+## Helpful Links
+
+* **NLU Demo**: https://ibm.biz/nlu_demo
+* **NLU Documentation**: https://console.bluemix.net/apidocs/natural-language-understanding
+* **NLU Hands-On Lab Document**: https://ibm.box.com/v/6588NLULab
+
 ## Getting Started
 
 ### Dev Environment
@@ -59,6 +65,64 @@ The `Sentiment & Emotion` tab shows the range of emotions being expressed in the
 ### Syntax Tab
 
 The `Syntax` tab shows a word-cloud of all the words in the document in their base (lemmatized) form. The bubbles are weighted by how many times the word appears in the document, and nouns and verbs are indicated by green and red respectively.
+
+## Sample Inputs
+
+Here are some sample text snippets and URLs that you can use to experiment with the features of NLU:
+
+### Sentiment/Emotion
+
+```
+The traffic in Denver is truly awful at rush hour. I do love the food, though! It's also amzing to be that close to such great skiing in the mountains.
+```
+
+### Keywords
+
+Flying Car Blog Post: https://medium.com/s/2069/flying-cars-are-closer-to-reality-than-you-think-a3ab21ff9373
+
+### Entities
+
+```
+IBM and Red Hat, the world’s leading provider of open source cloud software, announced today that the companies have reached a definitive agreement under which IBM will acquire all of the issued and outstanding common shares of Red Hat for $190.00 per share in cash, representing a total enterprise value of approximately $34 billion.
+```
+
+```
+I went to Paris with my best friends Paris and John.
+```
+
+### Categories
+
+```
+Golden State needs to trade Steph Curry and make Monta Ellis the point guard. Curry will bring back good value and Ellis needs the ball.
+```
+
+### Concepts
+
+Stephen Hawkins Article: http://www.bbc.com/news/uk-43396008
+
+### Semantic Roles
+
+IBM + Red Hat Article: https://www.zdnet.com/article/why-ibm-bought-red-hat-its-all-open-source-cloud-all-the-time/
+
+### Relations
+
+```
+Lindsey Vonn wins gold medal at world cup finals in Sweden
+```
+
+To try `relations`, you can send send a call directly from the `terminal` with the `curl` command. You'll need to fill in your own `apikey` with the one from your configured account.
+
+```sh
+curl -X POST -u "apikey:<YOUR API KEY>" \
+  "$NLU_URL/v1/analyze?version=2019-02-11" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "text": "Lindsey Vonn wins gold medal at world cup finals in Sweden",
+    "features": {
+      "relations": {}
+    }
+  }'
+```
 
 ## Extra Credit
 
